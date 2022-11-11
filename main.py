@@ -220,7 +220,8 @@ def checkFactor(inputString):
     elif tokenNext == 1:
         print(tokenString + " ", end="")
         cntIdent += 1
-        if tokenString not in calcProcessDict:   # 선언되지 않은 변수 Unknown 처리
+        if tokenString not in calcProcessDict:
+            # Un-initialized Variable
             calcProcessDict[tokenString] = "Unknown"
             isNameWarning = True
             msgNameWarning = tokenString
@@ -282,7 +283,8 @@ def checkFactorTail(inputString):
         stkOperation.append(tokenString)
         checkLexical(inputString)
         if tokenNext == 6:
-            print(tokenString + " ", end="")   # MULT_OP의 중복 연산 제거
+            # Duplicate Operator Removal
+            print(tokenString + " ", end="")
             isLogicWarning = True;
             msgLogicWarning = tokenString
             checkLexical(inputString)
