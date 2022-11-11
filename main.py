@@ -121,11 +121,14 @@ def checkStatement(inputString):
     if tokenNext == 1:
         calcProcessDict[tokenString] = "Unknown"
         stkIdent.append(tokenString)
-        print(tokenString + " ", end="")
+
+        print(f"{tokenString} ", end="")
+
         cntIdent += 1
         checkLexical(inputString)
         if tokenNext == 3:
-            print(tokenString + " ", end="")
+            print(f"{tokenString} ", end="")
+
             checkLexical(inputString)
             checkExpr(inputString)
             if stkConst[-1] == "Unknown":
@@ -138,38 +141,40 @@ def checkStatement(inputString):
             print("Error")
     else:
         print("Error")
+
     if tokenNext != -1:
         print(tokenString)
+
         if isLogicWarning:
-            print("ID : " + str(cntIdent) + "; " + "TOKEN_CONST : " + str(cntConst) + "; " + "OP : " + str(
-                cntOperator) + "; ")
-            print('(Warning) "중복 연산자(' + msgLogicWarning + ') 제거"')
+            print(f"ID : {str(cntIdent)}; TOKEN_CONST : {str(cntConst)}; OP : {str(cntOperator)};")
+            print("(Warning) 중복 연산자({msgLogicWarning}) 제거")
+
             isLogicWarning = False
             msgLogicWarning = ""
         elif isNameWarning:
-            print("ID : " + str(cntIdent) + "; " + "TOKEN_CONST : " + str(cntConst) + "; " + "OP : " + str(
-                cntOperator) + "; ")
-            print('(Error) "정의되지 않은 변수(' + msgNameWarning + ')가 참조됨"')
+            print(f"ID : {str(cntIdent)}; TOKEN_CONST : {str(cntConst)}; OP : {str(cntOperator)};")
+            print("(Error) 정의되지 않은 변수({msgNameWarning})가 참조됨")
+
             isNameWarning = False
             msgNameWarning = ""
         else:
-            print("ID : " + str(cntIdent) + "; " + "TOKEN_CONST : " + str(cntConst) + "; " + "OP : " + str(
-                cntOperator) + "; ")
+            print(f"ID : {str(cntIdent)}; TOKEN_CONST : {str(cntConst)}; OP : {str(cntOperator)};")
             print("(OK)")
     else:
         print()
+
         if isLogicWarning:
-            print("ID : " + str(cntIdent) + "; " + "TOKEN_CONST : " + str(cntConst) + "; " + "OP : " + str(
-                cntOperator) + "; ")
-            print('(Warning) "중복 연산자(' + msgLogicWarning + ') 제거"')
+            print(f"ID : {str(cntIdent)}; TOKEN_CONST : {str(cntConst)}; OP : {str(cntOperator)};")
+            print(f"(Warning) 중복 연산자({msgLogicWarning}) 제거")
+
             isLogicWarning = False
             msgLogicWarning = ""
         else:
-            print("ID : " + str(cntIdent) + "; " + "TOKEN_CONST : " + str(cntConst) + "; " + "OP : " + str(
-                cntOperator) + "; ")
+            print(f"ID : {str(cntIdent)}; TOKEN_CONST : {str(cntConst)}; OP : {str(cntOperator)};")
             print("(OK)")
-        print("Result == > operand1 : " + str(calcProcessDict["operand1"]) + ";" + " operand2 : " + str(
-            calcProcessDict["operand2"]) + ";" + " target : " + str(calcProcessDict["target"]) + ";")
+
+
+        print(f"Result == > operand1 : {str(calcProcessDict['operand1'])}; operand2 : {str(calcProcessDict['operand2'])}; target : {str(calcProcessDict['target'])};")
 
     cntIdent = 0
     cntConst = 0
@@ -192,12 +197,14 @@ def checkTerm(inputString):
 def checkTermTail(inputString):
     global isLogicWarning, cntOperator, msgLogicWarning
     if tokenNext == 5:
-        print(tokenString + " ", end="")
+        print(f"{tokenString} ", end="")
+
         cntOperator += 1
         stkOperation.append(tokenString)
         checkLexical(inputString)
         if tokenNext == 5:
-            print(tokenString + " ", end="")
+            print(f"{tokenString} ", end="")
+
             isLogicWarning = True
             msgLogicWarning = tokenString
             checkLexical(inputString)
@@ -209,16 +216,20 @@ def checkTermTail(inputString):
 def checkFactor(inputString):
     global cntIdent, cntConst, isNameWarning, msgNameWarning
     if tokenNext == 7:
-        print(tokenString + " ", end="")
+        print(f"{tokenString} ", end="")
+
         checkLexical(inputString)
         checkExpr(inputString)
         if tokenNext == 8:
-            print(tokenString + " ", end="")
+            print(f"{tokenString} ", end="")
+
             checkLexical(inputString)
         else:
             print("Error")
+
     elif tokenNext == 1:
-        print(tokenString + " ", end="")
+        print(f"{tokenString} ", end="")
+
         cntIdent += 1
         if tokenString not in calcProcessDict:
             # Un-initialized Variable
@@ -230,7 +241,8 @@ def checkFactor(inputString):
             stkIdent.append(tokenString)
         checkLexical(inputString)
     elif tokenNext == 2:
-        print(tokenString + " ", end="")
+        print(f"{tokenString} ", end="")
+
         cntConst += 1
         stkConst.append(tokenString)
         if len(stkConst) == 2:
@@ -278,14 +290,16 @@ def checkFactor(inputString):
 def checkFactorTail(inputString):
     global cntOperator, isLogicWarning, msgLogicWarning
     if tokenNext == 6:
-        print(tokenString + " ", end="")
+        print(f"{tokenString} ", end="")
+
         cntOperator += 1
         stkOperation.append(tokenString)
         checkLexical(inputString)
         if tokenNext == 6:
             # Duplicate Operator Removal
-            print(tokenString + " ", end="")
-            isLogicWarning = True;
+            print(f"{tokenString} ", end="")
+
+            isLogicWarning = True
             msgLogicWarning = tokenString
             checkLexical(inputString)
         checkFactor(inputString)
